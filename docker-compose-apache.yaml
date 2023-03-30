@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  wordpress:
+    image: wordpress:latest
+    volumes:
+      - ./wordpress_uat/:/var/www/html
+      #- ./plugins:/var/www/html/wp-content/plugins
+      - ./php/upload.ini:/usr/local/etc/php/conf.d/upload.ini
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: 172.31.17.215:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: isylzjko
+      WORDPRESS_DB_NAME: wordpress_nginx
+      # WORDPRESS_DEBUG: "true"
+      WORDPRESS_REDIS_HOST: redis:6379
+
+    ports:
+      - "80:80"
+    networks:
+      netlink: {}
+  
+networks:
+  netlink:
+    external : true
+    name : netlink
