@@ -11,7 +11,7 @@ services:
          - "80:80"
         #  - "443:443"
         volumes:
-          - wordpress:/var/www/html
+          - ./wordpress_uat:/var/www/html
         #  - ./nginx/conf.d:/etc/nginx/conf.d
         #  - ./nginx/nginx.conf:/etc/nginx/nginx.conf
         #  - ./wordpress_uat:/var/www/html
@@ -50,7 +50,8 @@ services:
         # WORDPRESS_DEBUG: "true"
         WORDPRESS_REDIS_HOST: redis:6379
       volumes:
-        - wordpress:/var/www/html
+        - ./wordpress_uat:/var/www/html
+        - ./fpm-config:/usr/local/etc/php-fpm.d
       #   - ./wordpress_uat:/var/www/html
       #   - ./php/upload.ini:/usr/local/etc/php/conf.d/upload.ini
       networks:
