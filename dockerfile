@@ -1,14 +1,12 @@
-FROM  --platform=linux/amd64 wordpress:php7.4-fpm-alpine
+FROM wordpress:php8.0-fpm-alpine
+
+WORKDIR /var/www/html
+
+COPY ./wordpress_uat/ .
+
+RUN chmod -R 777 /var/www/html
+
+COPY ./php/upload.ini /usr/local/etc/php/conf.d/upload.ini
 
 
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-RUN php -r "if (hash_file('sha384', 'composer-setup.php') === '55ce33d7678c5a611085589f1f3ddf8b3c52d662cd01d4ba75c0ee0459970c2200a51f492d557530c71c15d8dba01eae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-RUN php composer-setup.php
-RUN php -r "unlink('composer-setup.php');"
 
-RUN mv composer.phar /usr/local/bin/composer
-
-
-EXPOSE 9000
-
-CMD ["php-fpm"]
